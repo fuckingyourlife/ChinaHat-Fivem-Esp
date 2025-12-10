@@ -25,3 +25,11 @@ Um pequeno módulo ESP que desenha um "China Hat" sobre a cabeça de jogadores n
 float hatHeight = CircleValue * 1.2f;  // Altura
 float hatRadius = CircleValue * 1.5f;  // Largura
 float topOffset = CircleValue * 0.6f;  // Cabeça
+```
+
+
+---
+
+## Preview
+
+https://streamable.com/ntuh9b
