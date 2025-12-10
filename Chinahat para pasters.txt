@@ -1,0 +1,82 @@
+China hat para paster
+
+Esp.cpp
+
+        if (Cfg->ChinaHat)
+        {
+            if (HeadPos != D3DXVECTOR3(0, 0, 0)) {
+                D3DXVECTOR2 head_screen_pos = SDK::Game::WorldToScreen(HeadPos);
+                if (head_screen_pos != D3DXVECTOR2(0, 0)) {
+                    ImU32 hatColor = IM_COL32(
+                        static_cast<int>(Cfg->ChinaHatCol.Value.x * 255.f),
+                        static_cast<int>(Cfg->ChinaHatCol.Value.y * 255.f),
+                        static_cast<int>(Cfg->ChinaHatCol.Value.z * 255.f),
+                        255
+                    );
+
+                    int CircleValue = Height / 15;
+                    if (CircleValue <= 10) { CircleValue = Height / 20; }
+                    
+                    // Se quiser aqui se muda uns bglh
+                    float hatHeight = CircleValue * 1.2f;  // Altura
+                    float hatRadius = CircleValue * 1.5f;  // Largura
+                    float topOffset = CircleValue * 0.6f;  // Cabeça
+                    
+                    ImVec2 center(head_screen_pos.x, head_screen_pos.y - topOffset);
+                    ImVec2 top(center.x, center.y - hatHeight);
+                    
+                    std::vector<ImVec2> points;
+                    int segments = 24; // Isso aqui é o tanto de linhas
+                    for (int i = 0; i < segments; i++) {
+                        float angle = (2 * 3.14159265f / segments) * i - 1.57f;
+                        float x = center.x + cosf(angle) * hatRadius;
+                        float y = center.y + sinf(angle) * hatRadius * 0.3f;
+                        points.push_back(ImVec2(x, y));
+                    }
+                    
+                    for (int i = 0; i < segments; i++) {
+                        DrawList->AddLine(top, points[i], hatColor, 2.0f);
+                    }
+                    
+                    for (int i = 0; i < segments; i++) {
+                        int next = (i + 1) % segments;
+                        DrawList->AddLine(points[i], points[next], hatColor, 2.0f);
+                    }
+                    
+                    // Linha de profundidade
+                    for (int i = 0; i < segments; i += 4) { // Segmentos
+                        int opposite = (i + segments/2) % segments;
+                        DrawList->AddLine(top, points[opposite], hatColor, 1.0f);
+                    }
+                   
+                }
+            }
+        }
+
+
+Config.hpp
+
+	inline static bool ChinaHat;
+	inline static ImColor ChinaHatCol { 255, 255, 255, 200 };
+
+
+Gui.cpp ou Visual.hpp (WEXIZE)
+Chamo assim no meu:
+                    ImGui::Checkbox(skCrypt("China Hat"), &g_Config.ESP->ChinaHat);
+                    if (g_Config.ESP->ChinaHat) {
+                        ImGui::SameLine();
+                        ImGui::SetCursorPosX(ImGui::GetWindowWidth() - 80);
+                        if (ImGui::ColorButton(skCrypt("Cor do China Hat"), g_Config.ESP->ChinaHatCol)) {
+                            ImGui::OpenPopup(skCrypt("Escolher Cor"));
+                        }
+                        if (ImGui::BeginPopup(skCrypt("Escolher Cor"))) {
+                            ImGui::ColorPicker4(skCrypt("##picker"), (float*)&g_Config.ESP->ChinaHatCol, ImGuiColorEditFlags_NoSidePreview | ImGuiColorEditFlags_AlphaBar | ImGuiColorEditFlags_NoSmallPreview | ImGuiColorEditFlags_PickerHueWheel);
+                            ImGui::EndPopup();
+                        }
+                    }
+Se vc usa wexize deve usar algo tipo isso
+
+            	     Custom::CheckBox( xorstr( "China Hat" ), &g_Config.ESP->ChinaHat );
+
+Não implore por ajuda é so pensar um pouco mesmo esta literalmente tudo escrito XD
+Ass. lipeee sigmaboy
