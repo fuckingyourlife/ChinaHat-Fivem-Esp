@@ -27,9 +27,21 @@ float hatRadius = CircleValue * 1.5f;  // Largura
 float topOffset = CircleValue * 0.6f;  // Cabeça
 ```
 
-
 ---
 
 ## Preview
 
 https://streamable.com/ntuh9b
+
+---
+
+## Download Area
+
+[Download .txt](https://github.com/fuckingyourlife/ChinaHat-Fivem-Esp/raw/main/Chinahat%20para%20pasters.txt)
+
+---
+
+## Developer
+- [lipeee](https://guns.lol/lipeee)
+
+
